@@ -1,28 +1,45 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import { withFormik } from 'formik'
+import Yup from 'yup'
 
-class App extends Component {
-  render() {
+
+const App = ({values, handleChange}) => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <form>
+        <input 
+            type='email'
+            name='email'
+            placeholder='Email'
+            value={values.email}
+            onChange={handleChange}
+        />
+        <input 
+            type='password'
+            name='password'
+            placeholder='Password'
+            value={values.password}
+            onChange={handleChange}
+        />
+        <button>Submit</button>
+      </form>
     );
-  }
 }
 
-export default App;
+
+const FormikApp = withFormik({
+  mapPropsToValues({email, password}) {
+    return {
+      email: email || '',
+      password: password || ''
+    }
+  }
+})(App)
+
+// withFormik -> used to create higher Order Component
+//FormikApp -> call withFormik then pass in an options object, this object is where we define everything ie. what our initial values are, how we handle validation, what to do when form gets submitted etc...
+// name='email' is used by formik as identifier 
+// setup props then pass through the props in mapPropsTovalues, so can set an inital value || ''(empty string)
+// onSubmit -> call prop from formik that allows us to do validation as middleware then submits, (ie. like Redux-Saga, does stuff then executes function)
+
+export default FormikApp;
