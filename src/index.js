@@ -5,5 +5,5 @@ import FormikApp from './App';
 
 
 
-ReactDOM.render(<FormikApp email='abdil@gmail.com'/>, document.getElementById('root'));
+ReactDOM.render(<FormikApp />, document.getElementById('root'));
 
